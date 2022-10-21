@@ -1,15 +1,12 @@
-.Header{
-
+.Header {
   background: #212529;
   font-family: Roboto, sans-serif;
-
 }
-.header-content{
+
+.header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-
 }
 
 .Header h3 {
@@ -18,25 +15,25 @@
   border-radius: 6px;
   padding-left: 1rem;
   padding-right: 1rem;
-
 }
 
-.currency-name{
+.currency-name {
   padding-right: 5px;
 }
-.Convertation-container{
+
+.Convertation-container {
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
 
-.container{
-  
+.container {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
-.currency-value-container{
+
+.currency-value-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -45,7 +42,7 @@
   max-width: 170px;
 }
 
-.item-currency{
+.item-currency {
   padding-left: 1rem;
   padding-right: 1rem;
   border-radius: 6px;
@@ -57,14 +54,14 @@
   border-bottom: 1px solid #fff;
 }
 
-.input-convert{
+.input-convert {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0;
 }
 
-.input-block{
+.input-block {
   margin-top: 1rem;
   border: 1px solid #5f6368;
   caret-color: #8ab4f8;
@@ -74,7 +71,7 @@
   border-radius: 6px;
 }
 
-.input-block input{
+.input-block input {
   border: none;
   padding: 5px;
 }
@@ -84,4 +81,3 @@
   border-left: 1px solid #212529;
   padding: 5px;
 }
-
