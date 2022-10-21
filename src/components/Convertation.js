@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { convertExchange } from '../api'
 
 function Convertation({ currencyRate }) {
-  const [firstInputValue, setFirstInputValue] = useState('');
+  const [firstInputValue, setFirstInputValue] = useState('0');
   const [firstCurrency, setFirstCurrency] = useState('USD')
-  const [secondInputValue, setSecondInputValue] = useState('');
+  const [secondInputValue, setSecondInputValue] = useState('0');
   const [secondCurrency, setSecondCurrency] = useState('USD')
 
   const handleFirstInputChange = (e) => {
@@ -62,9 +62,11 @@ function Convertation({ currencyRate }) {
   }
 
   return (
-    <div className="Convertation">
-      <div className="container">
-        <form>
+    <div className="Convertation container">
+        <h2><u>Конвертер валют</u></h2>
+        <span>Источник: по среднему банковскому курсу</span>
+      <div className="container input-convert">
+        <div className="input-block">
           <input
             type="number"
             name="input-first-currency"
@@ -78,23 +80,24 @@ function Convertation({ currencyRate }) {
           >
             {renderSelectOptions()}
           </select>
-        </form>
-
-        <form>
-          <input
-            type="number"
-            name="input-second-currency"
-            placeholder="Введите вторую валюту"
-            value={secondInputValue}
-            onChange={handleSecondInputValue}
-          />
-          <select
-            name="select-second-currency"
-            onChange={handleSecondSelectChange}
-          >
-            {renderSelectOptions()}
-          </select>
-        </form>
+        </div>
+        <h2>=</h2>
+        <div className="input-block">
+        <input
+          type="number"
+          name="input-second-currency"
+          placeholder="Введите вторую валюту"
+          value={secondInputValue}
+          onChange={handleSecondInputValue}
+        />
+        <select
+          name="select-second-currency"
+          onChange={handleSecondSelectChange}
+        >
+          {renderSelectOptions()}
+        </select>
+        </div>
+       
       </div>
     </div>
   );

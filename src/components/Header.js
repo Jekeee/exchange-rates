@@ -2,29 +2,24 @@ import React from "react";
 import { convertCurrencyToUAH } from "../helpers/convertCurrencyToUAH";
 
 function Header({ date, currencyRate }) {
+  console.log(currencyRate);
   return (
-    <div className="App">
-      <header className="p-3 text-bg-dark">
+      <header className="Header">
         <div align="center" className="container">
           <h3>Курс валют на {date}</h3>
-          <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-space-between">
-            <div className="Header">
-              <div className="p-3 text-bg-dark">
-                {Object.keys(currencyRate).map((currency) => (
-                  <div className="container" key={currency}>
-                    <div className="flex-container block flex-item">
-                      <div className="currency-name">{currency}</div>
-                      <div className="currency-value">{convertCurrencyToUAH(currencyRate[currency])}* UAH
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+          
+          <div className=" div-currency-value">
+              {Object.keys(currencyRate).filter(function(name) {
+                  return name !== 'UAH';
+                  }).map((currency) => (
+                <div className="item-currency" key={currency}>
+                    <div className="currency-name">{currency}</div>
+                    <div className="currency-value">{convertCurrencyToUAH(currencyRate[currency])}* UAH</div>
+                </div>
+              ))}  
             </div>
-          </div>
         </div>
       </header>
-    </div>
   );
 }
 
