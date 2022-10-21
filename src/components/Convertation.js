@@ -1,23 +1,34 @@
 import React, { useState } from "react";
 import { convertExchange } from '../api'
 
+
+
 function Convertation({ currencyRate }) {
   const [firstInputValue, setFirstInputValue] = useState('0');
   const [firstCurrency, setFirstCurrency] = useState('USD')
   const [secondInputValue, setSecondInputValue] = useState('0');
   const [secondCurrency, setSecondCurrency] = useState('USD')
+  
+  let timeout = null;
 
   const handleFirstInputChange = (e) => {
+    clearTimeout(timeout);
     const { value } = e.target
     setFirstInputValue(value);
-
-    convertExchange(firstCurrency, secondCurrency, value)
-      .then((data) => {
-        const result = data.result;
-        setSecondInputValue(result.toFixed(2));
-      })
-      .catch((error) => console.log("error", error));
+    
+     timeout = setTimeout(() => (
+        
+        convertExchange(firstCurrency, secondCurrency, value)
+        .then((data) => {
+            const result = data.result;
+            setSecondInputValue(result.toFixed(2));
+        })
+        .catch((error) => console.log("error", error))
+    
+     ), 3000);
   };
+
+  
 
   const handleFirstSelectChange = (e) => {
     const { value } = e.target
@@ -81,7 +92,6 @@ function Convertation({ currencyRate }) {
             {renderSelectOptions()}
           </select>
         </div>
-        <h2>=</h2>
         <div className="input-block">
         <input
           type="number"

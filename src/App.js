@@ -4,6 +4,7 @@ import Convertation from "./components/Convertation";
 import { getLatestExchange } from "./api";
 import { currencies } from './consts/currencies'
 
+
 function App() {
   const [date, setDate] = useState("");
   const [currencyRate, setCurrencyRate] = useState("");
