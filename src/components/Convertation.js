@@ -1,87 +1,103 @@
 import React, { useState } from "react";
+import { convertExchange } from '../api'
 
-function Convertation(currencyRate) {
-    const [inputFirst, setInputFirst] = useState("");
-    const [inputSecond, setInputSecond] = useState("");
+function Convertation({ currencyRate }) {
+  const [firstInputValue, setFirstInputValue] = useState('');
+  const [firstCurrency, setFirstCurrency] = useState('USD')
+  const [secondInputValue, setSecondInputValue] = useState('');
+  const [secondCurrency, setSecondCurrency] = useState('USD')
 
-    let convertFirstCurrency = (e) => {
-        e.preventDefault();
-        let inputFirstCurrency = document.getElementsByName("iput-first-currency")[0].value;
-        let selectFirstConvert = document.getElementsByName("select-first-currency")[0].value;
-        let selectSecondConvert = document.getElementsByName("select-second-currency")[0].value;
+  const handleFirstInputChange = (e) => {
+    const { value } = e.target
+    setFirstInputValue(value);
 
-        setInputFirst(inputFirstCurrency);
-        let getUrlConvert ="https://api.exchangerate.host/convert?from=" + selectFirstConvert + "&to=" + selectSecondConvert + "&amount=" + inputFirstCurrency;
-        fetch(getUrlConvert)
-            .then((data) => {
-                return data.json();
-            })
-            .then((data) => {
-                let result = data.result;
-                setInputSecond(result.toFixed(2));
-            })
-            .catch((error) => console.log("error", error));
-    };
+    convertExchange(firstCurrency, secondCurrency, value)
+      .then((data) => {
+        const result = data.result;
+        setSecondInputValue(result.toFixed(2));
+      })
+      .catch((error) => console.log("error", error));
+  };
 
-    let convertSecondCurrency = (e) => {
-        e.preventDefault();
-        let selectFirstConvert = document.getElementsByName("select-first-currency")[0].value;
-        let inputSecondCurrency = document.getElementsByName("iput-second-currency")[0].value;
-        let selectSecondConvert = document.getElementsByName("select-second-currency")[0].value;
-        setInputSecond(inputSecondCurrency);
-        let getUrlConvert ="https://api.exchangerate.host/convert?from=" + selectSecondConvert + "&to=" + selectFirstConvert + "&amount=" + inputSecondCurrency;
-        fetch(getUrlConvert)
-            .then((data) => {
-                return data.json();
-            })
-            .then((data) => {
-                let result = data.result;
-                setInputFirst(result.toFixed(2));
-            })
-            .catch((error) => console.log("error", error));
-    };
+  const handleFirstSelectChange = (e) => {
+    const { value } = e.target
+    setFirstCurrency(value);
 
-    return (
-        <div className="Convertatyon">
-            <div className="container">
-                <form>
-                    <input
-                        type="number"
-                        name="iput-first-currency"
-                        value={inputFirst}
-                        onChange={convertFirstCurrency}
-                    />
-                    <select
-                        name="select-first-currency"
-                        id=""
-                        onChange={convertFirstCurrency}
-                    >
-                        {Object.keys(currencyRate.currencyRate).map((keyName, i) => (
-                            <option>{keyName}</option>
-                        ))}
-                    </select>
-                </form>
+    convertExchange(value, secondCurrency, firstInputValue)
+      .then((data) => {
+        const result = data.result;
+        setSecondInputValue(result.toFixed(2));
+      })
+      .catch((error) => console.log("error", error));
+  }
 
-                <form>
-                    <input
-                        type="number"
-                        name="iput-second-currency"
-                        value={inputSecond}
-                        onChange={convertSecondCurrency}
-                    />
-                    <select
-                        name="select-second-currency"
-                        id=""
-                        onChange={convertFirstCurrency}
-                    >
-                        {Object.keys(currencyRate.currencyRate).map((keyName, i) => (
-                            <option>{keyName}</option>
-                        ))}
-                    </select>
-                </form>
-            </div>
-        </div>
-    );
+  const handleSecondInputValue = (e) => {
+    const { value } = e.target
+    setSecondInputValue(value);
+
+    convertExchange(secondCurrency, firstCurrency, value)
+      .then((data) => {
+        const result = data.result;
+        setFirstInputValue(result.toFixed(2));
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const handleSecondSelectChange = (e) => {
+    const { value } = e.target
+    setSecondCurrency(value)
+
+    convertExchange(firstCurrency, value, firstInputValue)
+      .then((data) => {
+        const result = data.result;
+        setSecondInputValue(result.toFixed(2));
+      })
+      .catch((error) => console.log("error", error));
+  }
+
+  const renderSelectOptions = () => {
+    return Object.keys(currencyRate).map(keyName => (
+      <option key={keyName}>{keyName}</option>
+    ))
+  }
+
+  return (
+    <div className="Convertation">
+      <div className="container">
+        <form>
+          <input
+            type="number"
+            name="input-first-currency"
+            placeholder="Введите первую валюту"
+            value={firstInputValue}
+            onChange={handleFirstInputChange}
+          />
+          <select
+            name="select-first-currency"
+            onChange={handleFirstSelectChange}
+          >
+            {renderSelectOptions()}
+          </select>
+        </form>
+
+        <form>
+          <input
+            type="number"
+            name="input-second-currency"
+            placeholder="Введите вторую валюту"
+            value={secondInputValue}
+            onChange={handleSecondInputValue}
+          />
+          <select
+            name="select-second-currency"
+            onChange={handleSecondSelectChange}
+          >
+            {renderSelectOptions()}
+          </select>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default Convertation;
